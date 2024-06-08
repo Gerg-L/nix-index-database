@@ -85,10 +85,10 @@ jobs:
     needs: index
     outputs:
       release_name: ${{ steps.date.outputs.date }}
-      x86_64-linux-hash: ${{ steps.hashes.outputs.x86_64-linux }}
-      x86_64-darwin-hash: ${{ steps.hashes.outputs.x86_64-darwin }}
-      aarch64-linux-hash: ${{ steps.hashes.outputs.aarch64-linux }}
-      aarch64-darwin-hash: ${{ steps.hashes.outputs.aarch64-darwin }}
+      x86_64-linux-hash: ${{ steps.hashes.outputs.index-x86_64-linux }}
+      x86_64-darwin-hash: ${{ steps.hashes.outputs.index-x86_64-darwin }}
+      aarch64-linux-hash: ${{ steps.hashes.outputs.index-aarch64-linux }}
+      aarch64-darwin-hash: ${{ steps.hashes.outputs.index-aarch64-darwin }}
     steps:
     - name: download x86_64-linux artifact
       uses: actions/download-artifact@v4
