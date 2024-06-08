@@ -1,5 +1,5 @@
 self:
-{ lib, pkgs, config,  ... }:
+{ lib, pkgs, config, ... }:
 {
   options = {
     programs.nix-index.symlinkToCacheHome = lib.mkOption {
@@ -15,13 +15,13 @@ self:
   config = {
     programs.nix-index = {
       enable = lib.mkDefault true;
-      package = lib.mkDefault self.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nix-index-with-db;
+      package = lib.mkDefault self.packages.${pkgs.stdenv.system}.nix-index-with-db;
     };
-    home.packages = lib.optional config.programs.nix-index-database.comma.enable self.legacyPackages.${pkgs.stdenv.hostPlatform.system}.comma-with-db;
+    home.packages = lib.optional config.programs.nix-index-database.comma.enable self.packages.${pkgs.stdenv.system}.comma-with-db;
 
     home.file."${config.xdg.cacheHome}/nix-index/files" =
       lib.mkIf config.programs.nix-index.symlinkToCacheHome
-        { source = self.legacyPackages.${pkgs.stdenv.system}.database; };
+        { source = self.packages.${pkgs.stdenv.system}.nix-index-database; };
   };
   _file = ./darwin-module.nix;
 }
