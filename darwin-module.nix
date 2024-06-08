@@ -3,7 +3,7 @@ self:
 {
   programs.nix-index = {
     enable = lib.mkDefault true;
-    package = lib.mkDefault self.legacyPackages.${pkgs.stdenv.system}.nix-index-with-db;
+    package = lib.mkDefault self.packages.${pkgs.stdenv.system}.nix-index-with-db;
   };
 
   _file = ./darwin-module.nix;

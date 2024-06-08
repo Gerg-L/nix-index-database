@@ -1,9 +1,9 @@
-{
-  lib,
-  symlinkJoin,
-  makeBinaryWrapper,
-  nix-index-unwrapped,
-  nix-index-database,
+{ lib
+, symlinkJoin
+, makeBinaryWrapper
+, nix-index-unwrapped
+, nix-index-database
+,
 }:
 symlinkJoin {
   name = "nix-index-with-db-${nix-index-unwrapped.version}";
