@@ -19,11 +19,11 @@
 
         nix-index-with-db =
           pkgs.callPackage ./nix-index-wrapper.nix {
-          inherit nix-index-database;
+            inherit nix-index-database;
           };
         comma-with-db =
           pkgs.callPackage ./comma-wrapper.nix {
-          inherit nix-index-database;
+            inherit nix-index-database;
           };
       };
     in
