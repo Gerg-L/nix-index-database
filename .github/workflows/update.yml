@@ -122,8 +122,8 @@ jobs:
         extra_nix_config: |
           access-tokens = github.com=${{ github.token }}
           system-features = nixos-test benchmark big-parallel kvm
-      id: hashes
     - name: get hashes
+      id: hashes
       run: |
         for filename in *index-; do
           echo "$filename=$(nix store prefetch-file "file://$PWD/$filename" | jq -r .hash)" >> "$GITHUB_OUTPUT"
