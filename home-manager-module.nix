@@ -1,5 +1,5 @@
 self:
-{ lib, pkgs, config,  ... }:
+{ lib, pkgs, config, ... }:
 {
   options = {
     programs.nix-index.symlinkToCacheHome = lib.mkOption {

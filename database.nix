@@ -9,7 +9,6 @@ fetchurl {
       aarch64-linux = "sha256-dQEoLl/Hy1Dfp2r4xv1Z7rf0tGTYxHwv/78Z+5sVV+s=";
       x86_64-darwin = "sha256-AofjzknOvLKFZ9Jp2BfUN3uUi9lxADHhCLxMbJ7qVPg=";
       aarch64-darwin = "sha256-85i0WU/+JKlijQ7Rl7zLoKCBJtWd40aPEiAyYoa4pz0=";
-    }
-    .${stdenv.system};
+    }.${stdenv.system};
   passthru.unsafeDiscardReferences.out = true;
 }

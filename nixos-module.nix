@@ -7,7 +7,7 @@ self:
 
   config = {
     programs.nix-index.enable = lib.mkDefault true;
-    programs.nix-index.package = lib.mkDefault  self.legacyPackages.${pkgs.stdenv.system}.nix-index-with-db;
+    programs.nix-index.package = lib.mkDefault self.legacyPackages.${pkgs.stdenv.system}.nix-index-with-db;
     environment.systemPackages = lib.optional config.programs.nix-index-database.comma.enable self.legacyPackages.${pkgs.stdenv.system}.database;
   };
 

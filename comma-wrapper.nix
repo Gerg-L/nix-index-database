@@ -1,10 +1,10 @@
-{
-  lib,
-  symlinkJoin,
-  makeBinaryWrapper,
-  comma,
-  nix-index-unwrapped,
-  nix-index-database,
+{ lib
+, symlinkJoin
+, makeBinaryWrapper
+, comma
+, nix-index-unwrapped
+, nix-index-database
+,
 }:
 let
   commaOverridden = comma.override { inherit nix-index-unwrapped; };
