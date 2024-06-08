@@ -29,9 +29,9 @@ jobs:
     strategy:
       matrix:
           system: ['x86_64-linux', 'aarch64-linux', 'x86_64-darwin', 'aarch64-darwin']
-    name: Build database
     outputs:
       ${{ matrix.system }}-hash: ${{ steps.run-index.outputs.hash}}
+    name: Build database
     steps:
     - uses: actions/checkout@v4
     - name: Swap space report before modification
