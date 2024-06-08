@@ -7,8 +7,8 @@ self:
 
   config = {
     programs.nix-index.enable = lib.mkDefault true;
-    programs.nix-index.package = lib.mkDefault self.legacyPackages.${pkgs.stdenv.system}.nix-index-with-db;
-    environment.systemPackages = lib.optional config.programs.nix-index-database.comma.enable self.legacyPackages.${pkgs.stdenv.system}.database;
+    programs.nix-index.package = lib.mkDefault self.packages.${pkgs.stdenv.system}.nix-index-with-db;
+    environment.systemPackages = lib.optional config.programs.nix-index-database.comma.enable self.packages.${pkgs.stdenv.system}.database;
   };
 
   _file = ./nixos-module.nix;
