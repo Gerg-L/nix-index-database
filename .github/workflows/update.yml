@@ -128,10 +128,7 @@ jobs:
         name: Release ${{ steps.date.outputs.date }}
         tag_name: ${{ steps.date.outputs.date }}
         files: |
-          index-x86_64-linux
-          index-aarch64-linux
-          index-x86_64-darwin
-          index-aarch64-darwin
+          index-*
 
   update-flake:
     runs-on: ubuntu-latest

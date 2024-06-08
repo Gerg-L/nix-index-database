@@ -21,7 +21,7 @@ self:
 
     home.file."${config.xdg.cacheHome}/nix-index/files" =
       lib.mkIf config.programs.nix-index.symlinkToCacheHome
-        { source = self.packages.${pkgs.stdenv.system}.database; };
+        { source = self.packages.${pkgs.stdenv.system}.nix-index-database; };
   };
   _file = ./darwin-module.nix;
 }
