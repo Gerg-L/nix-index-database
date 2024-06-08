@@ -165,10 +165,10 @@ jobs:
           url = "https://github.com/${{ github.repository }}/releases/download/${{ needs.upload-index.outputs.release_name }}/index-${stdenv.system}";
           hash =
             {
-              x86_64-linux = "${{ needs.upload-index.outputs.x86_64-linux }}";
-              aarch64-linux = "${{ needs.upload-index.outputs.aarch64-linux }}";
-              x86_64-darwin = "${{ needs.upload-index.outputs.x86_64-darwin }}";
-              aarch64-darwin = "${{ needs.upload-index.outputs.aarch64-darwin }}";
+              x86_64-linux = "${{ needs.upload-index.outputs.x86_64-linux-hash }}";
+              aarch64-linux = "${{ needs.upload-index.outputs.aarch64-linux-hash }}";
+              x86_64-darwin = "${{ needs.upload-index.outputs.x86_64-darwin-hash }}";
+              aarch64-darwin = "${{ needs.upload-index.outputs.aarch64-darwin-hash }}";
             }
             .${stdenv.system};
           passthru.unsafeDiscardReferences.out = true;
