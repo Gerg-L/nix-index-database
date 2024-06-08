@@ -78,7 +78,7 @@ jobs:
     - name: run nix-index
       id: run-index
       run: |
-        nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.indexName}} 2>&1 | grep -v '+ generating index:'
+        nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.system}} 2>&1 | grep -v '+ generating index:'
         echo "${{ matrix.system }}-hash=$(nix store prefetch-file "file://$PWD/${{ matrix.system }}-index" | jq -r .hash)" >> "$GITHUB_OUTPUT"
     - name: upload artifact
       uses: actions/upload-artifact@v4
