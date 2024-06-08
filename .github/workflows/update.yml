@@ -30,7 +30,10 @@ jobs:
       matrix:
         system: ['x86_64-linux', 'aarch64-linux', 'x86_64-darwin', 'aarch64-darwin']
     outputs:
-      ${{ matrix.system }}-hash: ${{ steps.run-index.outputs.hash}}
+      x86_64-linux-hash: ${{ steps.run-index-x86_64-linux.outputs.hash}}
+      x86_64-darwin-hash: ${{ steps.run-index-x86_64-darwin.outputs.hash}}
+      aarch64-linux-hash: ${{ steps.run-index-aarch64-linux.outputs.hash}}
+      aarch64-darwin-hash: ${{ steps.run-index-aarch64-darwin.outputs.hash}}
     name: Build database
     steps:
     - uses: actions/checkout@v4
@@ -73,7 +76,7 @@ jobs:
         name: mic92
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - name: run nix-index
-      id: run-index
+      id: run-index-${{ matrix.system }}
       run: |
         nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.indexName}} 2>&1 | grep -v '+ generating index:'
         echo "hash=$(nix store prefetch-file "file://$PWD/${{ matrix.system }}-index" | jq -r .hash)" >> "$GITHUB_OUTPUT"
