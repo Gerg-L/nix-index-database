@@ -164,7 +164,7 @@ jobs:
         if [[ "$(git status --porcelain)" != "" ]]; then
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add packages.nix
-          git commit -m "update packages.nix to release ${{ needs.upload-index.outputs.release_name }}"
+          git add generated.nix
+          git commit -m "update generated.nix to release ${{ needs.upload-index.outputs.release_name }}"
           git push origin HEAD:main
         fi
