@@ -125,7 +125,7 @@ jobs:
     - name: get hashes
       id: hashes
       run: |
-        for filename in *index-; do
+        for filename in index-*; do
           echo "$filename=$(nix store prefetch-file "file://$PWD/$filename" | jq -r .hash)" >> "$GITHUB_OUTPUT"
         done
     - name: Get current date
