@@ -28,15 +28,10 @@ jobs:
     needs: update-lock
     strategy:
       matrix:
-        include:
-          - indexName: x86_64-linux
-          - indexName: aarch64-linux
-          # breaks often and no one fixes it
-          - indexName: x86_64-darwin
-          - indexName: aarch64-darwin
+          system: ['x86_64-linux', 'aarch64-linux', 'x86_64-darwin', 'aarch64-darwin']
     name: Build database
     outputs:
-      ${{ matrix.indexName }}-hash: ${{ steps.run-index.outputs.hash}}
+      ${{ matrix.system }}-hash: ${{ steps.run-index.outputs.hash}}
     steps:
     - uses: actions/checkout@v4
     - name: Swap space report before modification
@@ -80,13 +75,13 @@ jobs:
     - name: run nix-index
       id: run-index
       run: |
-        nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.indexName }}-index --system ${{matrix.indexName}} 2>&1 | grep -v '+ generating index:'
-        echo "hash=$(nix store prefetch-file "file://$PWD/${{ matrix.indexName }}-index" | jq -r .hash)" >> "$GITHUB_OUTPUT"
+        nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.indexName}} 2>&1 | grep -v '+ generating index:'
+        echo "hash=$(nix store prefetch-file "file://$PWD/${{ matrix.system }}-index" | jq -r .hash)" >> "$GITHUB_OUTPUT"
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.indexName }}
-        path: ./${{ matrix.indexName }}-index
+        name: ${{ matrix.system }}
+        path: ./${{ matrix.system }}-index
 
   upload-index:
     runs-on: ubuntu-latest
