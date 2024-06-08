@@ -97,9 +97,8 @@ jobs:
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - name: run nix-index
       run: |
-        #nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.system}} 2>&1 | grep -v '+ generating index:'
-        #mv ./${{ matrix.system }}-index/files ./index-${{ matrix.system }}
-        wget -P "$PWD" https://github.com/nix-community/nix-index-database/releases/download/2024-06-02-030640/index-${{ matrix.system }}
+        nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.system}} 2>&1 | grep -v '+ generating index:'
+        mv ./${{ matrix.system }}-index/files ./index-${{ matrix.system }}
     - name: hash index
       id: hashes
       run: |
@@ -111,7 +110,7 @@ jobs:
         files: index-${{ matrix.system }}
 
 
-  update-flake:
+  update-generated:
     runs-on: ubuntu-latest
     needs: [ 'create-release', 'index']
     steps:
