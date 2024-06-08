@@ -72,12 +72,13 @@ jobs:
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - name: run nix-index
       run: |
-        nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.system}} 2>&1 | grep -v '+ generating index:'
+        #nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.system}} 2>&1 | grep -v '+ generating index:'
+        wget https://github.com/Gerg-L/nix-index-database/releases/download/2024-06-08-052509/index-${{ matrix.system }}
     - name: upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.system }}
-        path: ./${{ matrix.system }}-index
+        path: ./index-${{ matrix.system }}
 
   upload-index:
     runs-on: ubuntu-latest
@@ -93,28 +94,28 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: x86_64-linux
-        path: x86_64-linux-index
+        path: index-x86_64-linux
     - name: download aarch64-linux artifact
       uses: actions/download-artifact@v4
       with:
         name: aarch64-linux
-        path: aarch64-linux-index
+        path: index-aarch64-linux
     - name: download x86_64-darwin artifact
       uses: actions/download-artifact@v4
       with:
         name: x86_64-darwin
-        path: x86_64-darwin-index
+        path: index-x86_64-darwin
     - name: download aarch64-darwin artifact
       uses: actions/download-artifact@v4
       with:
         name: aarch64-darwin
-        path: aarch64-darwin-index
+        path: index-aarch64-darwin
     - name: move files
       run: |
-        mv x86_64-linux-index/files index-x86_64-linux
-        mv aarch64-linux-index/files index-aarch64-linux
-        mv x86_64-darwin-index/files index-x86_64-darwin
-        mv aarch64-darwin-index/files index-aarch64-darwin
+        #mv x86_64-linux-index/files index-x86_64-linux
+        #mv aarch64-linux-index/files index-aarch64-linux
+        #mv x86_64-darwin-index/files index-x86_64-darwin
+        #mv aarch64-darwin-index/files index-aarch64-darwin
     - name: install nix 
       uses: cachix/install-nix-action@V27
       with:
