@@ -10,13 +10,7 @@ self:
         location used by nix-index. Useful for tools like comma.
       '';
     };
-    programs.nix-index-database.comma.enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Whether to wrap comma with nix-index-database and put it in the PATH.
-      '';
-    };
+    programs.nix-index-database.comma.enable = lib.mkEnableOption "wrapping comma with nix-index-database and put it in the PATH";
   };
   config = {
     programs.nix-index = {
