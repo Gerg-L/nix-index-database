@@ -110,7 +110,7 @@ jobs:
         name: aarch64-darwin
         path: aarch64-darwin-index
     - name: move files
-    - run: |
+      run: |
         mv x86_64-linux-index/files index-x86_64-linux
         mv aarch64-linux-index/files index-aarch64-linux
         mv x86_64-darwin-index/files index-x86_64-darwin
