@@ -1,14 +1,5 @@
-{ lib, pkgs, config, databases, ... }:
-
-let
-  nix-index-with-db = pkgs.callPackage ./nix-index-wrapper.nix {
-    nix-index-database = databases.${pkgs.stdenv.system}.database;
-  };
-  comma-with-db = pkgs.callPackage ./comma-wrapper.nix {
-    nix-index-database = databases.${pkgs.stdenv.system}.database;
-  };
-in
-
+self:
+{ lib, pkgs, config,  ... }:
 {
   options = {
     programs.nix-index.symlinkToCacheHome = lib.mkOption {
@@ -30,12 +21,13 @@ in
   config = {
     programs.nix-index = {
       enable = lib.mkDefault true;
-      package = lib.mkDefault nix-index-with-db;
+      package = lib.mkDefault self.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nix-index-with-db;
     };
-    home.packages = lib.optional config.programs.nix-index-database.comma.enable comma-with-db;
+    home.packages = lib.optional config.programs.nix-index-database.comma.enable self.legacyPackages.${pkgs.stdenv.hostPlatform.system}.comma-with-db;
 
     home.file."${config.xdg.cacheHome}/nix-index/files" =
       lib.mkIf config.programs.nix-index.symlinkToCacheHome
-        { source = databases.${pkgs.stdenv.system}.database; };
+        { source = self.legacyPackages.${pkgs.stdenv.system}.database; };
   };
+  _file = ./darwin-module.nix;
 }

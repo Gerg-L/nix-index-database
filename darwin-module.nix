@@ -1,12 +1,10 @@
-{ pkgs, databases, ... }:
-
-let
-  nix-index-with-db = pkgs.callPackage ./nix-index-wrapper.nix {
-    nix-index-database = databases.${pkgs.stdenv.system}.database;
-  };
-in
-
+self:
+{ pkgs, lib, ... }:
 {
-  programs.nix-index.enable = true;
-  programs.nix-index.package = nix-index-with-db;
+  programs.nix-index = {
+    enable = lib.mkDefault true;
+    package = lib.mkDefault self.legacyPackages.${pkgs.stdenv.system}.nix-index-with-db;
+  };
+
+  _file = ./darwin-module.nix;
 }

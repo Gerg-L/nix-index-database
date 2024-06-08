@@ -1,14 +1,5 @@
-{ config, pkgs, lib, databases, ... }:
-
-let
-  nix-index-with-db = pkgs.callPackage ./nix-index-wrapper.nix {
-    nix-index-database = databases.${pkgs.stdenv.system}.database;
-  };
-  comma-with-db = pkgs.callPackage ./comma-wrapper.nix {
-    nix-index-database = databases.${pkgs.stdenv.system}.database;
-  };
-in
-
+self:
+{ config, pkgs, lib, ... }:
 {
   options = {
     programs.nix-index-database.comma.enable = lib.mkOption {
@@ -20,7 +11,9 @@ in
 
   config = {
     programs.nix-index.enable = lib.mkDefault true;
-    programs.nix-index.package = lib.mkDefault nix-index-with-db;
-    environment.systemPackages = lib.optional config.programs.nix-index-database.comma.enable comma-with-db;
+    programs.nix-index.package = lib.mkDefault  self.legacyPackages.${pkgs.stdenv.system}.nix-index-with-db;
+    environment.systemPackages = lib.optional config.programs.nix-index-database.comma.enable self.legacyPackages.${pkgs.stdenv.system}.database;
   };
+
+  _file = ./nixos-module.nix;
 }
